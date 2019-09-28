@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
+    <style>
+        body {
+            padding-top: 50px;
+        }
+
+        input[type=submit],
+        select {
+            width: 100%;
+            background-color: #FF117E;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=text],
+        input[type=password],
+        select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #FF117E;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            margin: auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<div class='container'>
+    <form id='signin' autocomplete="off" autocapitalize="none">
+        <input id='uname' type='text' placeholder='Enter Username' required>
+        <input id='psw' type='password' placeholder='Enter Password' required>
+        <input id='login' type='submit' value='Login'>
+    </form>
+    <div id='loader' class='loader'></div>
+</div>
+
+<script>
+    document.getElementById('signin').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        document.getElementById('signin').style.display = 'none';
+        document.getElementById('loader').style.display = 'block';
+
+        const username = document.getElementById('uname').value;
+        const password = document.getElementById('psw').value;
+
+        fetch(`http://localhost:8081/signin/webflow?username=${username}&password=${password}`, {
+            method: 'GET'
+        })
+            .then(res => {
+                return res.text();
+            })
+            .then(jwt => {
+                window.webkit.messageHandlers.signin.postMessage({ jwt: jwt });
+            })
+            .catch(err => {
+                document.getElementById('signin').style.display = 'block';
+                document.getElementById('loader').style.display = 'none';
+            });
+    }, false);
+</script>
+
+
+</html>
