@@ -89,14 +89,6 @@ extension SplashView {
         
         drawD()
         
-        let animations = {
-            self.alpha = 0
-        }
-        let completion: (Bool) -> Void = { _ in
-            self.removeFromSuperview()
-        }
-        UIView.animate(withDuration: 2.0,
-                       animations: animations,
-                       completion: completion)
+        dissolveFromSuperview(duration: 2)
     }
 }

@@ -37,6 +37,12 @@ extension DesignTableViewCell {
 }
 
 extension DesignTableViewCell {
+    func take(_ inspiration: Inspiration) {
+        
+    }
+}
+
+extension DesignTableViewCell {
     func setupConstraints() {
         contentView.addConstraints([
             .init(item: designImageView!,

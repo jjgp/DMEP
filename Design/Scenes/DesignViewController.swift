@@ -10,6 +10,7 @@ import UIKit
 
 class DesignViewController: UIViewController {
     static var cellReuseIdentifier = "DesignCell"
+    var inspiration: [Inspiration] = []
     var tableView: UITableView!
     var webView: SigninWebView!
 }
@@ -37,15 +38,16 @@ extension DesignViewController {
 
 extension DesignViewController: SigninWebViewDelegate {
     func onReceivedJWT(_ jwt: String?) {
-        let animations = {
-            self.webView.view.alpha = 0
+        if let jwt = jwt {
+            API().fetch(inspirationRequest(count: 10, authorization: jwt)) { inspiration, response, error in
+                DispatchQueue.main.async {
+                    self.inspiration = inspiration ?? []
+                    self.tableView.reloadData()
+                }
+            }
         }
-        let completion: (Bool) -> Void = { _ in
-            self.webView.view.removeFromSuperview()
-        }
-        UIView.animate(withDuration: 1.0,
-                       animations: animations,
-                       completion: completion)
+        
+        webView.view.dissolveFromSuperview(duration: 1)
     }
 }
 
@@ -55,7 +57,7 @@ extension DesignViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return inspiration.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
