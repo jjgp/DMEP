@@ -46,8 +46,10 @@ To ready the server run `make timeout`.
 
 To simulate authentication timeouts the server will now enforce the JWT `exp` at 10 seconds. How might we refactor the application or request flow to account for authorization expiration?
 
-# Splash!
+# Animate!
 
 ![splash](README/Assets/splash.gif)
 
-Let's animate the splash screen to captivate the user.
+Let's animate the splash screen to captivate the user and perhaps we should animate the presentation of the images?
+
+![easein](README/Assets/easein.gif)
