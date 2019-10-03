@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		B79D0760233EE25100FA97C3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B79D075F233EE25100FA97C3 /* AppDelegate.m */; };
-		B79D0766233EE25100FA97C3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B79D0765233EE25100FA97C3 /* ViewController.m */; };
 		B79D0769233EE25100FA97C3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B79D0767233EE25100FA97C3 /* Main.storyboard */; };
 		B79D076B233EE25300FA97C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B79D076A233EE25300FA97C3 /* Assets.xcassets */; };
 		B79D076E233EE25300FA97C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B79D076C233EE25300FA97C3 /* LaunchScreen.storyboard */; };
 		B79D0771233EE25300FA97C3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B79D0770233EE25300FA97C3 /* main.m */; };
 		B79D077B233EE25300FA97C3 /* DesignTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B79D077A233EE25300FA97C3 /* DesignTests.m */; };
+		D2612248234568EA00DA737D /* SigninWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2612247234568E900DA737D /* SigninWebView.swift */; };
+		D261224A2346359600DA737D /* DesignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26122492346359600DA737D /* DesignViewController.swift */; };
+		D261224C2346382500DA737D /* DesignTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D261224B2346382500DA737D /* DesignTableViewCell.swift */; };
 		D2FF9E3823419DFC0070D942 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2FF9E3723419DFC0070D942 /* SplashView.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,8 +33,6 @@
 		B79D075B233EE25100FA97C3 /* Design.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Design.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B79D075E233EE25100FA97C3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B79D075F233EE25100FA97C3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		B79D0764233EE25100FA97C3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		B79D0765233EE25100FA97C3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		B79D0768233EE25100FA97C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B79D076A233EE25300FA97C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B79D076D233EE25300FA97C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -42,6 +42,9 @@
 		B79D077A233EE25300FA97C3 /* DesignTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DesignTests.m; sourceTree = "<group>"; };
 		B79D077C233EE25300FA97C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B79D0785233EE38400FA97C3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D2612247234568E900DA737D /* SigninWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninWebView.swift; sourceTree = "<group>"; };
+		D26122492346359600DA737D /* DesignViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignViewController.swift; sourceTree = "<group>"; };
+		D261224B2346382500DA737D /* DesignTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTableViewCell.swift; sourceTree = "<group>"; };
 		D2FF9E3623419DFC0070D942 /* Design-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Design-Bridging-Header.h"; sourceTree = "<group>"; };
 		D2FF9E3723419DFC0070D942 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,17 +89,18 @@
 		B79D075D233EE25100FA97C3 /* Design */ = {
 			isa = PBXGroup;
 			children = (
-				D2FF9E3623419DFC0070D942 /* Design-Bridging-Header.h */,
 				B79D075E233EE25100FA97C3 /* AppDelegate.h */,
+				D2FF9E3623419DFC0070D942 /* Design-Bridging-Header.h */,
 				B79D075F233EE25100FA97C3 /* AppDelegate.m */,
-				B79D0764233EE25100FA97C3 /* ViewController.h */,
-				B79D0765233EE25100FA97C3 /* ViewController.m */,
+				B79D0770233EE25300FA97C3 /* main.m */,
+				B79D076F233EE25300FA97C3 /* Info.plist */,
+				D261224B2346382500DA737D /* DesignTableViewCell.swift */,
+				D26122492346359600DA737D /* DesignViewController.swift */,
+				D2612247234568E900DA737D /* SigninWebView.swift */,
 				D2FF9E3723419DFC0070D942 /* SplashView.swift */,
-				B79D0767233EE25100FA97C3 /* Main.storyboard */,
 				B79D076A233EE25300FA97C3 /* Assets.xcassets */,
 				B79D076C233EE25300FA97C3 /* LaunchScreen.storyboard */,
-				B79D076F233EE25300FA97C3 /* Info.plist */,
-				B79D0770233EE25300FA97C3 /* main.m */,
+				B79D0767233EE25100FA97C3 /* Main.storyboard */,
 			);
 			path = Design;
 			sourceTree = "<group>";
@@ -211,8 +215,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B79D0766233EE25100FA97C3 /* ViewController.m in Sources */,
+				D261224A2346359600DA737D /* DesignViewController.swift in Sources */,
+				D261224C2346382500DA737D /* DesignTableViewCell.swift in Sources */,
 				D2FF9E3823419DFC0070D942 /* SplashView.swift in Sources */,
+				D2612248234568EA00DA737D /* SigninWebView.swift in Sources */,
 				B79D0760233EE25100FA97C3 /* AppDelegate.m in Sources */,
 				B79D0771233EE25300FA97C3 /* main.m in Sources */,
 			);
