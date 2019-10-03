@@ -168,11 +168,13 @@ inspiration.get('/image', (req, res) => {
     if (err) {
       res.sendStatus(500);
     } else {
-      res.writeHead(200, {
-        'Content-Type': 'image/png',
-        'Content-Length': buffer.length
-      });
-      res.end(buffer);
+      setTimeout(() => {
+        res.writeHead(200, {
+          'Content-Type': 'image/png',
+          'Content-Length': buffer.length
+        });
+        res.end(buffer);
+      }, 1000)
     }
   });
 });
