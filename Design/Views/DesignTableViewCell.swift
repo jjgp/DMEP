@@ -9,6 +9,7 @@
 import UIKit
 
 class DesignTableViewCell: UITableViewCell {
+    var dataTask: URLSessionDataTask?
     var designImageView: UIImageView!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -32,13 +33,20 @@ extension DesignTableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
+        dataTask?.cancel()
         designImageView.image = UIImage(named: "Loading")
     }
 }
 
 extension DesignTableViewCell {
-    func take(_ inspiration: Inspiration) {
-        
+    func take(_ inspiration: Inspiration, authorization: String) {
+        dataTask = API().fetch(imageRequest(inspiration: inspiration, authorization: authorization)) { data, response, error in
+            if let data = data {
+                DispatchQueue.main.async {
+                    self.designImageView?.image = UIImage(data: data)
+                }
+            }
+        }
     }
 }
 

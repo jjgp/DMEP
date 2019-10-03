@@ -10,6 +10,7 @@ import UIKit
 
 class DesignViewController: UIViewController {
     static var cellReuseIdentifier = "DesignCell"
+    var authorization: String!
     var inspiration: [Inspiration] = []
     var tableView: UITableView!
     var webView: SigninWebView!
@@ -39,7 +40,8 @@ extension DesignViewController {
 extension DesignViewController: SigninWebViewDelegate {
     func onReceivedJWT(_ jwt: String?) {
         if let jwt = jwt {
-            API().fetch(inspirationRequest(count: 10, authorization: jwt)) { inspiration, response, error in
+            authorization = jwt
+            API().fetch(inspirationRequest(count: 10, authorization: authorization)) { inspiration, response, error in
                 DispatchQueue.main.async {
                     self.inspiration = inspiration ?? []
                     self.tableView.reloadData()
@@ -62,6 +64,7 @@ extension DesignViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DesignViewController.cellReuseIdentifier, for: indexPath) as! DesignTableViewCell
+        cell.take(inspiration[indexPath.row], authorization: authorization)
         return cell
     }
 }

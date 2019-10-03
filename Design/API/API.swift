@@ -23,12 +23,14 @@ enum ModelableError: Error {
     case fromJSONData(reason: Error)
 }
 
-public protocol Modelable: Decodable {
-    static func from(json data: Data) throws -> Self
+protocol Modelable: Decodable {
+    static func from(data: Data) throws -> Self
 }
 
-extension Modelable {
-    public static func from(json data: Data) throws -> Self {
+protocol JSONModelable: Modelable {}
+
+extension JSONModelable {
+    static func from(data: Data) throws -> Self {
         do {
             return try JSONDecoder().decode(self, from: data)
         } catch {
@@ -61,7 +63,7 @@ extension API {
                 200..<400 ~= code,
                 let data = data {
                 do {
-                    model = try F.Model.from(json: data)
+                    model = try F.Model.from(data: data)
                 } catch {
                     model = nil
                     completionError = error
