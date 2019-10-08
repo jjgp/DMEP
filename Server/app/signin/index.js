@@ -47,6 +47,7 @@ signin.get('/webflow', (req, res) => {
   }
 
   const token = jwt.sign({
+    session_id: '3sIhx7Jdudg3awZ551vfVOZvBsxVoXn0:352304852:prod-1-v7',
     access_token: 'access_token',
     iat: Date.now(),
   },
@@ -72,6 +73,7 @@ signin.post('/', (req, res) => {
   }
 
   const token = jwt.sign({
+    session_id: '3sIhx7Jdudg3awZ551vfVOZvBsxVoXn0:352304852:prod-1-v7',
     access_token: 'access_token',
     iat: Date.now(),
   },

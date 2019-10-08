@@ -21,7 +21,7 @@
     
     self.webView = [[WKWebView alloc] initWithFrame:CGRectZero
                                       configuration:[[WKWebViewConfiguration alloc] init]];
-    [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"signin"];
+    [self.webView.configuration.userContentController addScriptMessageHandler:self name:@"observe"];
     [self.view addSubview:self.webView];
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://localhost:8081/signin"]]];
     self.webView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -63,8 +63,8 @@
 
 - (void)userContentController:(WKUserContentController *)userContentController
       didReceiveScriptMessage:(WKScriptMessage *)message {
-    NSDictionary *body = (NSDictionary *)message.body;
-    [self.delegate onReceivedJWT:body[@"jwt"]];
+    NSArray *body = (NSArray *)message.body;
+    [self.delegate onReceivedJWT:body.firstObject[@"jwt"]];
 }
 
 @end

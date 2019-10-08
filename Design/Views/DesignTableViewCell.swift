@@ -39,15 +39,13 @@ extension DesignTableViewCell {
 }
 
 extension DesignTableViewCell {
-    func take(_ inspiration: Inspiration, authorization: String) {
-        let headers: Headers = ["Authorization": authorization]
-        dataTask = API(configuration: .init(headers: headers))
-            .fetch(.image(inspiration: inspiration)) { data, response, error in
-                if let data = data {
-                    DispatchQueue.main.async {
-                        self.designImageView?.image = UIImage(data: data)
-                    }
+    func take(_ inspiration: Inspiration, api: API) {
+        dataTask = api.fetch(.image(inspiration: inspiration)) { data, response, error in
+            if let data = data {
+                DispatchQueue.main.async {
+                    self.designImageView?.image = UIImage(data: data)
                 }
+            }
         }
     }
 }

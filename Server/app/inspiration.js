@@ -124,6 +124,11 @@ const randomStroke = () =>
   Math.floor(Math.random() * 5) + 1;
 
 inspiration.get('/', (req, res) => {
+  if (req.query.cluster !== 'prod-1-v7') {
+    res.sendStatus(500);
+    return;
+  }
+
   const images = [];
   for (let i = 0; i < req.query.count; ++i) {
     images.push(
@@ -142,6 +147,11 @@ inspiration.get('/', (req, res) => {
 });
 
 inspiration.get('/image', (req, res) => {
+  if (req.query.cluster !== 'prod-1-v7') {
+    res.sendStatus(500);
+    return;
+  }
+
   const letter = parseInt(req.query.letter);
   if (isNaN(letter) || letter < 0 || letter > 5) {
     res.sendStatus(500);

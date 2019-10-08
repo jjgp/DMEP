@@ -6,11 +6,12 @@
 //  Copyright © 2019 Design. All rights reserved.
 //
 
+import JWTDecode
 import UIKit
 
 class DesignViewController: UIViewController {
     static var cellReuseIdentifier = "DesignCell"
-    var authorization: String!
+    var api: API!
     var inspiration: [Inspiration] = []
     var tableView: UITableView!
     var webView: SigninWebViewController!
@@ -39,16 +40,20 @@ extension DesignViewController {
 
 extension DesignViewController: SigninWebViewDelegate {
     func onReceivedJWT(_ jwt: String?) {
-        if let jwt = jwt {
-            authorization = jwt
-            let headers: Headers = ["Authorization": authorization]
-            let completion = { (inspiration: [Inspiration]?, response: URLResponse?, error: Error?) in
+        if let jwt = jwt,
+            let decoded = try? decode(jwt: jwt),
+            let cluster = (decoded.body["session_id"] as? String)?.suffix(15) {
+            api = API(configuration: .init(headers: ["Authorization": jwt],
+                                           parameters: [Parameter(name: "cluster", value: String(cluster))]))
+            
+            let completion = { [weak self] (inspiration: [Inspiration]?, response: URLResponse?, error: Error?) in
                 DispatchQueue.main.async {
-                    self.inspiration = inspiration ?? []
-                    self.tableView.reloadData()
+                    self?.inspiration = inspiration ?? []
+                    self?.tableView.reloadData()
                 }
             }
-            API(configuration: .init(headers: headers)).fetch(.inspiration(count: 10), completion: completion)
+            
+            api.fetch(.inspiration(count: 10), completion: completion)
         }
         
         webView.view.dissolveFromSuperview(duration: 1)
@@ -66,7 +71,7 @@ extension DesignViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DesignViewController.cellReuseIdentifier, for: indexPath) as! DesignTableViewCell
-        cell.take(inspiration[indexPath.row], authorization: authorization)
+        cell.take(inspiration[indexPath.row], api: api)
         return cell
     }
 }
