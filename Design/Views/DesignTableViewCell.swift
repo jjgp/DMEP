@@ -40,12 +40,14 @@ extension DesignTableViewCell {
 
 extension DesignTableViewCell {
     func take(_ inspiration: Inspiration, authorization: String) {
-        dataTask = API().fetch(.image(inspiration: inspiration)) { data, response, error in
-            if let data = data {
-                DispatchQueue.main.async {
-                    self.designImageView?.image = UIImage(data: data)
+        let headers: Headers = ["Authorization": authorization]
+        dataTask = API(configuration: .init(headers: headers))
+            .fetch(.image(inspiration: inspiration)) { data, response, error in
+                if let data = data {
+                    DispatchQueue.main.async {
+                        self.designImageView?.image = UIImage(data: data)
+                    }
                 }
-            }
         }
     }
 }

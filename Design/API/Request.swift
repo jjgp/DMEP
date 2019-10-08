@@ -8,16 +8,11 @@
 
 import Foundation
 
-enum Method: String {
-    case get = "GET"
-}
-
-struct Parameter {
-    let name: String
-    let value: String
-}
-
 struct Request {
+    enum Method: String {
+        case get = "GET"
+    }
+    
     let method: String
     let headers: [String: String]
     let parameters: [Parameter]

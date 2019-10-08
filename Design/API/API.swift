@@ -8,11 +8,31 @@
 
 import Foundation
 
+typealias Headers = [String: String]
+
+struct Parameter {
+    let name: String
+    let value: String
+}
+
 class API {
+    struct Configuration {
+        let headers: Headers?
+        let parameters: [Parameter]?
+        
+        init(headers: Headers? = nil, parameters: [Parameter]? = nil) {
+            self.headers = headers
+            self.parameters = parameters
+        }
+    }
+    let configuration: Configuration?
     let host: String
     let session: URLSession
     
-    init(host: String = "http://localhost:8081", session: URLSession = .shared) {
+    init(host: String = "http://localhost:8081",
+         session: URLSession = .shared,
+         configuration: Configuration? = nil) {
+        self.configuration = configuration
         self.host = host
         self.session = session
     }
@@ -21,9 +41,19 @@ class API {
 fileprivate extension API {
     func URLRequest(from request: Request) -> URLRequest {
         var components = URLComponents(string: "\(host)\(request.path)")!
-        components.queryItems = request.parameters.map { URLQueryItem(name: $0.name, value: $0.value) }
+        var queryItems: [URLQueryItem] = []
+        let mapParameters = { (parameter: Parameter) in
+            queryItems.append(URLQueryItem(name: parameter.name, value: parameter.value))
+        }
+        request.parameters.forEach(mapParameters)
+        configuration?.parameters?.forEach(mapParameters)
+        components.queryItems = queryItems
+        
         var URLRequest = Foundation.URLRequest(url: components.url!)
         URLRequest.httpMethod = request.method
+        configuration?.headers?.forEach() {
+            URLRequest.setValue($1, forHTTPHeaderField: $0)
+        }
         return URLRequest
     }
 }

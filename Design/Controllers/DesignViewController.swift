@@ -13,7 +13,7 @@ class DesignViewController: UIViewController {
     var authorization: String!
     var inspiration: [Inspiration] = []
     var tableView: UITableView!
-    var webView: SigninWebView!
+    var webView: SigninWebViewController!
 }
 
 extension DesignViewController {
@@ -26,7 +26,7 @@ extension DesignViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(DesignTableViewCell.self, forCellReuseIdentifier: DesignViewController.cellReuseIdentifier)
         
-        webView = SigninWebView()
+        webView = SigninWebViewController()
         webView.delegate = self
         
         view.addSubview(tableView)
@@ -41,12 +41,14 @@ extension DesignViewController: SigninWebViewDelegate {
     func onReceivedJWT(_ jwt: String?) {
         if let jwt = jwt {
             authorization = jwt
-            API().fetch(.inspiration(count: 10)) { (inspiration: [Inspiration]?, response: URLResponse?, error: Error?) in
+            let headers: Headers = ["Authorization": authorization]
+            let completion = { (inspiration: [Inspiration]?, response: URLResponse?, error: Error?) in
                 DispatchQueue.main.async {
                     self.inspiration = inspiration ?? []
                     self.tableView.reloadData()
                 }
             }
+            API(configuration: .init(headers: headers)).fetch(.inspiration(count: 10), completion: completion)
         }
         
         webView.view.dissolveFromSuperview(duration: 1)
