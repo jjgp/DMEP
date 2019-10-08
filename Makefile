@@ -1,3 +1,7 @@
+.PHONY: bootstrap
+bootstrap:
+	brew bundle; pushd Server; npm i; popd;
+
 .PHONY: infinite_scroll
 infinite_scroll:
 	pushd Server; npm start -- --authorization false; popd;

@@ -4,7 +4,7 @@ The Design iOS application is a medium of endless inpsiration offerring an infin
 
 # Getting Started
 
-To get up and running with the server that enables Design run `brew bundle`. The server has a dependency on `node` which may be installed via `homebrew`, manually, or via a manager such as [`nvm`](https://github.com/nvm-sh/nvm). Any needed dependencies of Design may be added to the `Podfile`. 
+To get up and running run `make bootstrap`. This will do the following: `brew bundle; pushd Server; npm i; popd;`. The server has a dependency on `node` which may be installed via `homebrew`, manually, or via a manager such as [`nvm`](https://github.com/nvm-sh/nvm). Any needed dependencies of Design may be added to the `Podfile`. 
 
 # Infinite Scroll
 
