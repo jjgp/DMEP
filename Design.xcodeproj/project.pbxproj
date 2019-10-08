@@ -108,7 +108,7 @@
 				D261224F23463F8300DA737D /* API */,
 				B79D076C233EE25300FA97C3 /* LaunchScreen.storyboard */,
 				B79D0767233EE25100FA97C3 /* Main.storyboard */,
-				D261225023463F8E00DA737D /* Scenes */,
+				D261225023463F8E00DA737D /* Screens */,
 				D261225123463FA200DA737D /* Views */,
 			);
 			path = Design;
@@ -134,12 +134,12 @@
 			path = API;
 			sourceTree = "<group>";
 		};
-		D261225023463F8E00DA737D /* Scenes */ = {
+		D261225023463F8E00DA737D /* Screens */ = {
 			isa = PBXGroup;
 			children = (
 				D26122492346359600DA737D /* DesignViewController.swift */,
 			);
-			path = Scenes;
+			path = Screens;
 			sourceTree = "<group>";
 		};
 		D261225123463FA200DA737D /* Views */ = {

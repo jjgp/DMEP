@@ -8,32 +8,24 @@
 
 import Foundation
 
-extension Array: Modelable, JSONModelable where Element: Decodable {}
-
-func inspirationRequest(count: Int, authorization: String) -> Request<[Inspiration]> {
-    return Request<[Inspiration]>(headers: ["Authorization": authorization],
-                                  parameters: [Parameter("count", String(count))],
-                                  URLPath: "/inspiration")
-}
-
-extension Data: Modelable {
-    static func from(data: Data) throws -> Data {
-        return data
+extension Request {
+    static func inspiration(count: Int) -> Request {
+        return Request(parameters: [.init(name: "count", value: String(count))],
+                       path: "/inspiration")
     }
-}
-
-func imageRequest(inspiration: Inspiration, authorization: String) -> Request<Data> {
-    let parameters = [
-        Parameter("letter", String(inspiration.letter)),
-        Parameter("background", inspiration.background),
-        Parameter("stroke", String(inspiration.stroke)),
-        Parameter("strokeFill", inspiration.strokeFill),
-        Parameter("fillOne", inspiration.fillOne),
-        Parameter("fillTwo", inspiration.fillTwo),
-        Parameter("fillThree", inspiration.fillThree),
-        
-    ]
-    return Request<Data>(headers: ["Authorization": authorization],
-                         parameters: parameters,
-                         URLPath: "/inspiration/image")
+    
+    static func image(inspiration: Inspiration) -> Request {
+        let parameters: [Parameter] = [
+            .init(name: "letter", value: String(inspiration.letter)),
+            .init(name: "background", value: inspiration.background),
+            .init(name: "stroke", value: String(inspiration.stroke)),
+            .init(name: "strokeFill", value: inspiration.strokeFill),
+            .init(name: "fillOne", value: inspiration.fillOne),
+            .init(name: "fillTwo", value: inspiration.fillTwo),
+            .init(name: "fillThree", value: inspiration.fillThree),
+            
+        ]
+        return Request(parameters: parameters,
+                       path: "/inspiration/image")
+    }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Inspiration: JSONModelable {
+struct Inspiration: Decodable {
     let letter: Int
     let background: String
     let stroke: Int

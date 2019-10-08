@@ -20,11 +20,8 @@ class SigninWebView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let contentController = WKUserContentController()
-        contentController.add(self, name: "signin")
-        
         webView = WKWebView(frame: self.view.bounds, configuration: WKWebViewConfiguration())
-        webView.configuration.userContentController = contentController
+        webView.configuration.userContentController.add(self, name: "signin")
         view.addSubview(webView)
         webView.load(URLRequest(url: URL(string: "http://localhost:8081/signin")!))
         

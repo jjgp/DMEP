@@ -82,8 +82,8 @@
             .then(res => {
                 return res.text();
             })
-            .then(authorization => {
-                window.webkit.messageHandlers.signin.postMessage({ authorization });
+            .then(jwt => {
+                window.webkit.messageHandlers.signin.postMessage({ jwt });
             })
             .catch(err => {
                 document.getElementById('signin').style.display = 'block';

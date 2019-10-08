@@ -41,7 +41,7 @@ extension DesignViewController: SigninWebViewDelegate {
     func onReceivedJWT(_ jwt: String?) {
         if let jwt = jwt {
             authorization = jwt
-            API().fetch(inspirationRequest(count: 10, authorization: authorization)) { inspiration, response, error in
+            API().fetch(.inspiration(count: 10)) { (inspiration: [Inspiration]?, response: URLResponse?, error: Error?) in
                 DispatchQueue.main.async {
                     self.inspiration = inspiration ?? []
                     self.tableView.reloadData()

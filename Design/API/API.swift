@@ -12,69 +12,49 @@ class API {
     let host: String
     let session: URLSession
     
-    init(host: String = "http://localhost:8081",
-         session: URLSession = .shared) {
+    init(host: String = "http://localhost:8081", session: URLSession = .shared) {
         self.host = host
         self.session = session
     }
 }
 
-enum ModelableError: Error {
-    case fromJSONData(reason: Error)
-}
-
-protocol Modelable: Decodable {
-    static func from(data: Data) throws -> Self
-}
-
-protocol JSONModelable: Modelable {}
-
-extension JSONModelable {
-    static func from(data: Data) throws -> Self {
-        do {
-            return try JSONDecoder().decode(self, from: data)
-        } catch {
-            throw ModelableError.fromJSONData(reason: error)
-        }
+fileprivate extension API {
+    func URLRequest(from request: Request) -> URLRequest {
+        var components = URLComponents(string: "\(host)\(request.path)")!
+        components.queryItems = request.parameters.map { URLQueryItem(name: $0.name, value: $0.value) }
+        var URLRequest = Foundation.URLRequest(url: components.url!)
+        URLRequest.httpMethod = request.method
+        return URLRequest
     }
 }
 
-protocol Fetchable {
-    associatedtype Model: Modelable
-    
-    func URLRequest(from host: String) throws -> URLRequest
-}
-
 extension API {
-    typealias Completion<M: Modelable> = (M?, HTTPURLResponse?, Error?) -> Void
+    @discardableResult
+    func fetch(_ request: Request, completion: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        let task = session.dataTask(with: URLRequest(from: request), completionHandler: completion)
+        task.resume()
+        return task
+    }
     
     @discardableResult
-    func fetch<F: Fetchable>(_ request: F, completion: Completion<F.Model>? = nil) -> URLSessionDataTask {
-        let task = session.dataTask(with: try! request.URLRequest(from: host)) { data, response, error in
-            guard let completion = completion else {
-                return
-            }
-            
+    func fetch<D: Decodable>(_ request: Request, completion: @escaping (D?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        return fetch(request) { data, response, error in
             let response = response as? HTTPURLResponse
-            var model: F.Model?
+            var decodable: D?
             var completionError = error
-            
+
             if let code = response?.statusCode,
                 200..<400 ~= code,
                 let data = data {
                 do {
-                    model = try F.Model.from(data: data)
+                    decodable = try JSONDecoder().decode(D.self, from: data)
                 } catch {
-                    model = nil
+                    decodable = nil
                     completionError = error
                 }
             }
-            
-            completion(model, response, completionError)
+
+            completion(decodable, response, completionError)
         }
-        task.resume()
-        
-        return task
     }
-    
 }
